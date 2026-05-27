@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>E-Commerce Web Application</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f1f5f9;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      background:#0f172a;
+      color:white;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 50px;
+      flex-wrap:wrap;
+    }
+
+    nav h1{
+      color:#38bdf8;
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      gap:20px;
+    }
+
+    nav ul li{
+      cursor:pointer;
+    }
+
+    .cart-count{
+      background:red;
+      padding:4px 8px;
+      border-radius:50%;
+      font-size:12px;
+      margin-left:5px;
+    }
+
+    /* HERO */
+
+    .hero{
+      height:300px;
+      background:url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200') center/cover;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:white;
+      text-align:center;
+    }
+
+    .hero h2{
+      font-size:50px;
+      background:rgba(0,0,0,0.5);
+      padding:20px;
+      border-radius:10px;
+    }
+
+    /* PRODUCTS */
+
+    .container{
+      padding:50px;
+    }
+
+    .title{
+      text-align:center;
+      margin-bottom:40px;
+      color:#0f172a;
+      font-size:40px;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:white;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 5px 10px rgba(0,0,0,0.1);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+    }
+
+    .card img{
+      width:100%;
+      height:250px;
+      object-fit:cover;
+    }
+
+    .card-content{
+      padding:20px;
+    }
+
+    .card-content h3{
+      margin-bottom:10px;
+    }
+
+    .price{
+      color:#2563eb;
+      font-size:20px;
+      margin-bottom:15px;
+    }
+
+    button{
+      background:#2563eb;
+      color:white;
+      border:none;
+      padding:12px 18px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    /* CART */
+
+    .cart{
+      margin-top:60px;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .cart-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 0;
+      border-bottom:1px solid #ddd;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .total{
+      text-align:right;
+      margin-top:20px;
+      font-size:24px;
+      color:#2563eb;
+    }
+
+    /* LOGIN */
+
+    .login{
+      margin-top:60px;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .login form{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+      max-width:400px;
+      margin:auto;
+    }
+
+    .login input{
+      padding:15px;
+      border:1px solid #ddd;
+      border-radius:8px;
+    }
+
+    /* FOOTER */
+
+    footer{
+      margin-top:60px;
+      background:#0f172a;
+      color:white;
+      text-align:center;
+      padding:20px;
+    }
+
+    @media(max-width:768px){
+
+      nav{
+        flex-direction:column;
+        gap:15px;
+      }
+
+      .hero h2{
+        font-size:32px;
+      }
+
+      .container{
+        padding:20px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav>
+
+    <h1>ShopEase</h1>
+
+    <ul>
+      <li>Home</li>
+      <li>Products</li>
+      <li>Cart
+        <span class="cart-count" id="cartCount">
+          0
+        </span>
+      </li>
+      <li>Login</li>
+    </ul>
+
+  </nav>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <h2>
+      Modern E-Commerce Store
+    </h2>
+
+  </section>
+
+  <!-- PRODUCTS -->
+
+  <section class="container">
+
+    <h2 class="title">Products</h2>
+
+    <div class="products" id="products"></div>
+
+    <!-- CART -->
+
+    <div class="cart">
+
+      <h2>Your Cart</h2>
+
+      <div id="cartItems"></div>
+
+      <div class="total">
+        Total: ₹<span id="totalPrice">0</span>
+      </div>
+
+    </div>
+
+    <!-- LOGIN -->
+
+    <div class="login">
+
+      <h2 class="title">User Login</h2>
+
+      <form>
+
+        <input
+          type="email"
+          placeholder="Enter Email"
+        >
+
+        <input
+          type="password"
+          placeholder="Enter Password"
+        >
+
+        <button type="submit">
+          Login
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <p>
+      © 2026 ShopEase E-Commerce Website
+    </p>
+
+  </footer>
+
+  <script>
+
+    // PRODUCT DATA
+
+    const products = [
+
+      {
+        id:1,
+        name:"Smart Watch",
+        price:2999,
+        image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30"
+      },
+
+      {
+        id:2,
+        name:"Headphones",
+        price:1999,
+        image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+      },
+
+      {
+        id:3,
+        name:"Laptop",
+        price:59999,
+        image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+      },
+
+      {
+        id:4,
+        name:"Shoes",
+        price:2499,
+        image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+      }
+
+    ];
+
+    let cart = [];
+
+    // DISPLAY PRODUCTS
+
+    const productContainer =
+      document.getElementById("products");
+
+    products.forEach(product => {
+
+      productContainer.innerHTML += `
+
+        <div class="card">
+
+          <img src="${product.image}">
+
+          <div class="card-content">
+
+            <h3>${product.name}</h3>
+
+            <p class="price">
+              ₹${product.price}
+            </p>
+
+            <button onclick="addToCart(${product.id})">
+              Add to Cart
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+    // ADD TO CART
+
+    function addToCart(id){
+
+      const product =
+        products.find(p => p.id === id);
+
+      cart.push(product);
+
+      updateCart();
+
+    }
+
+    // UPDATE CART
+
+    function updateCart(){
+
+      const cartItems =
+        document.getElementById("cartItems");
+
+      const cartCount =
+        document.getElementById("cartCount");
+
+      const totalPrice =
+        document.getElementById("totalPrice");
+
+      cartItems.innerHTML = "";
+
+      let total = 0;
+
+      cart.forEach((item,index) => {
+
+        total += item.price;
+
+        cartItems.innerHTML += `
+
+          <div class="cart-item">
+
+            <h3>${item.name}</h3>
+
+            <p>₹${item.price}</p>
+
+            <button onclick="removeItem(${index})">
+              Remove
+            </button>
+
+          </div>
+
+        `;
+
+      });
+
+      cartCount.innerText = cart.length;
+
+      totalPrice.innerText = total;
+
+    }
+
+    // REMOVE ITEM
+
+    function removeItem(index){
+
+      cart.splice(index,1);
+
+      updateCart();
+
+    }
+
+  </script>
+
+</body>
+
+</html>
